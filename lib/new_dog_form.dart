@@ -16,6 +16,12 @@ class _AddDogFormPageState extends State<AddDogFormPage> {
 
   submitPup(BuildContext context){
     if (nameController.text.isEmpty) {
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.redAccent,
+          content: Text('Pups neeed names!'),
+        ),
+      );
     } else {
       // Create a new dog with the information from the form.
       var newDog = Dog(nameController.text, locationController.text,

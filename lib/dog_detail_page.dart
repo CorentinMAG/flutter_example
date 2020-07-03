@@ -25,7 +25,6 @@ class _DogDetailPageState extends State<DogDetailPage> {
     super.initState();
   }
 
-
   Future<Null> _ratingErrorDialog() async {
     // showDialog is a built-in Flutter method.
     return showDialog(
@@ -33,7 +32,7 @@ class _DogDetailPageState extends State<DogDetailPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Error!'),
-          content: Text("They're good dogs, Brant."),
+          content: Text("They're good dogs, guy ! Be gentle :("),
           // This action uses the Navigator to dismiss the dialog.
           // This is where you could return information if you wanted to.
           actions: [
@@ -167,7 +166,9 @@ class _DogDetailPageState extends State<DogDetailPage> {
                   min: 0.0,
                   max: 15.0,
                   onChanged: (newRating) {
-                    setState(() => _sliderValue = newRating);
+                    setState(() => {_sliderValue = newRating,
+                      widget.dog.rating=newRating.toInt()
+                    });
                   },
                   value: _sliderValue,
                 ),
@@ -188,26 +189,33 @@ class _DogDetailPageState extends State<DogDetailPage> {
     );
   }
 
-  void updateRating() {
+  void updateRating(context) {
     if (_sliderValue < 10) {
       _ratingErrorDialog();
     } else {
       setState(() =>{
         widget.dog.rating = _sliderValue.toInt()
+
       });
-      Provider.of<DogListModel>(context,listen: false).updateDog(_sliderValue.toInt(), widget.index);
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.greenAccent,
+          content: Text('Pup rating upgraded to ${_sliderValue.toInt()}'),
+        ),
+      );
     }
+    Provider.of<DogListModel>(context,listen: false).updateDog(_sliderValue.toInt(), widget.index);
   }
 
   Widget get submitRatingButton {
-    return RaisedButton(
-      onPressed: () => updateRating(),
-      child: Text('Submit'),
-      color: Colors.indigoAccent,
-    );
+    return Builder(builder: (context){
+      return RaisedButton(
+        onPressed: () => updateRating(context),
+        child: Text('Submit'),
+        color: Colors.indigoAccent,
+      );
+    });
   }
-
-
 
   @override
   Widget build(BuildContext context) {

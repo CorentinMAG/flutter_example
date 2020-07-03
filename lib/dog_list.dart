@@ -1,9 +1,6 @@
-import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_by_example/dog_card.dart';
-import 'package:flutter_by_example/dog_model.dart';
-import 'package:provider/provider.dart';
 
 import 'dog_list_model.dart';
 

@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_by_example/dog_list_model.dart';
-import 'package:provider/provider.dart';
 
 import 'dog_detail_page.dart';
 import 'dog_model.dart';
@@ -13,14 +11,13 @@ class DogCard extends StatefulWidget {
   DogCard(this.dog,this.index);
 
   @override
-  _DogCardState createState() => _DogCardState(dog,index);
+  _DogCardState createState() => _DogCardState();
 }
 
 class _DogCardState extends State<DogCard> {
-  Dog dog;
-  final int index;
+
   String renderUrl;
-  _DogCardState(this.dog,this.index);
+  _DogCardState();
 
   @override
   void initState() {
@@ -29,17 +26,17 @@ class _DogCardState extends State<DogCard> {
   }
 
   void renderDogPic() async {
-    await dog.getImageUrl();
+    await widget.dog.getImageUrl();
     if(mounted){
       setState(() {
-        renderUrl = dog.imageUrl;
+        renderUrl = widget.dog.imageUrl;
       });
     }
   }
 
   Widget get dogImage{
     var dogAvatar = Hero(
-      tag: dog,
+      tag: widget.dog,
       child: Container(
         width: 100.0,
         height: 100.0,
@@ -124,7 +121,7 @@ class _DogCardState extends State<DogCard> {
       MaterialPageRoute(
         // builder methods always take context!
         builder: (BuildContext context) {
-          return DogDetailPage(dog,index);
+          return DogDetailPage(widget.dog,widget.index);
         },
       ),
     );

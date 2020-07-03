@@ -53,9 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     // A null check, to make sure that the user didn't abandon the form.
     if (newDog != null) {
-      setState(() {
         Provider.of<DogListModel>(context,listen: false).addDog(newDog);
-      });
       // Add a newDog to our mock dog array.
     }
   }
